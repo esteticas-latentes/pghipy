@@ -10,6 +10,8 @@ pip install pghipy
 ## Usage
 
 ```python
+import librosa
+import numpy as np
 from pghipy import get_default_window, calculate_synthesis_window
 from pghipy import stft, pghi, istft
 
