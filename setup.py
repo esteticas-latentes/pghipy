@@ -7,7 +7,7 @@ def readme():
 setup(
     name='pghipy',
     version='0.1.1',
-    url='https://github.com/esteticas-latentes/pghipy',
+    url='https://github.com/esteticas-latentes/pghipy.git',
     author='Laurence Bender, Leonardo Pepino',
     author_email='pghipy@gmail.com',
     description='STFT/ISTFT transforms and phase recovery using Phase Gradient Heap Integration',
