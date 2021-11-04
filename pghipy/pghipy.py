@@ -60,10 +60,10 @@ def istft(X, win_length=2048,hop_length=512,window=None,synthesis_window=None,le
     return sig
 
 @jit(nopython=True)
-def pghi(x,win_length=2048, hop_length=512, gamma=None, tol=1e-6):
+def pghi(X,win_length=2048, hop_length=512, gamma=None, tol=1e-6):
     if gamma is None: gamma = 2*np.pi*((-win_length**2/(8*np.log(0.01)))**.5)**2
    
-    spectrogram = x.copy()
+    spectrogram = X.copy()
     abstol = np.array([1e-10], dtype=spectrogram.dtype)[0]  # if abstol is not the same type as spectrogram then casting occurs
     phase = np.zeros_like(spectrogram)
     max_val = np.amax(spectrogram)  # Find maximum value to start integration
@@ -78,14 +78,14 @@ def pghi(x,win_length=2048, hop_length=512, gamma=None, tol=1e-6):
        
     fmul = gamma/(hop_length * win_length)
 
-    y = np.empty((spectrogram.shape[0]+2,spectrogram.shape[1]+2),dtype=spectrogram.dtype)
-    y[1:-1,1:-1] = np.log(spectrogram + 1e-50)
-    y[0,:] = y[1,:]
-    y[-1,:] = y[-2,:]
-    y[:,0] = y[:,1]
-    y[:,-1] = y[:,-2]
-    dxdw = (y[1:-1,2:]-y[1:-1,:-2])/2
-    dxdt = (y[2:,1:-1]-y[:-2,1:-1])/2
+    Y = np.empty((spectrogram.shape[0]+2,spectrogram.shape[1]+2),dtype=spectrogram.dtype)
+    Y[1:-1,1:-1] = np.log(spectrogram + 1e-50)
+    Y[0,:] = Y[1,:]
+    Y[-1,:] = Y[-2,:]
+    Y[:,0] = Y[:,1]
+    Y[:,-1] = v[:,-2]
+    dxdw = (v[1:-1,2:]-Y[1:-1,:-2])/2
+    dxdt = (v[2:,1:-1]-Y[:-2,1:-1])/2
     
     fgradw = dxdw/fmul + (2*np.pi*hop_length/win_length)*np.arange(int(win_length/2)+1)
     tgradw = -fmul*dxdt + np.pi
