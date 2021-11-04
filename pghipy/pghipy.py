@@ -83,9 +83,9 @@ def pghi(X,win_length=2048, hop_length=512, gamma=None, tol=1e-6):
     Y[0,:] = Y[1,:]
     Y[-1,:] = Y[-2,:]
     Y[:,0] = Y[:,1]
-    Y[:,-1] = v[:,-2]
-    dxdw = (v[1:-1,2:]-Y[1:-1,:-2])/2
-    dxdt = (v[2:,1:-1]-Y[:-2,1:-1])/2
+    Y[:,-1] = Y[:,-2]
+    dxdw = (Y[1:-1,2:]-Y[1:-1,:-2])/2
+    dxdt = (Y[2:,1:-1]-Y[:-2,1:-1])/2
     
     fgradw = dxdw/fmul + (2*np.pi*hop_length/win_length)*np.arange(int(win_length/2)+1)
     tgradw = -fmul*dxdt + np.pi
